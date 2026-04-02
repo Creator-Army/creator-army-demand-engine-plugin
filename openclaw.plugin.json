@@ -1,0 +1,26 @@
+{
+	"id": "openclaw-creator-army",
+	"kind": "tool",
+	"uiHints": {
+		"apiKey": {
+			"label": "Creator Army API Key",
+			"sensitive": true,
+			"placeholder": "WAvsWw...",
+			"help": "Your API key from Creator Army (or use ${CREATOR_ARMY_API_KEY})"
+		},
+		"debug": {
+			"label": "Debug Logging",
+			"help": "Enable verbose debug logs for API calls and responses",
+			"advanced": true
+		}
+	},
+	"configSchema": {
+		"type": "object",
+		"additionalProperties": false,
+		"properties": {
+			"apiKey": { "type": "string" },
+			"debug": { "type": "boolean" }
+		},
+		"required": []
+	}
+}
