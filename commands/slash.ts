@@ -103,7 +103,7 @@ export function registerCommands(
 		handler: async () => {
 			try {
 				const result = await client.health()
-				if (result.success) {
+				if (result.ok) {
 					return { text: "Creator Army API is healthy and API key is valid." }
 				}
 				return { text: `Creator Army API check failed: ${result.message}` }

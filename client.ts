@@ -46,16 +46,16 @@ export class CreatorArmyClient {
 		return data
 	}
 
-	async health(): Promise<{ success: boolean; message?: string }> {
+	async health(): Promise<{ ok: boolean; message?: string }> {
 		try {
-			const data = await this.request<{ success: boolean; message?: string }>(
+			const data = await this.request<{ status: string; keyPrefix?: string }>(
 				"GET",
 				"/api/plugin/health",
 			)
-			return data
+			return { ok: data.status === "ok" }
 		} catch (err) {
 			return {
-				success: false,
+				ok: false,
 				message: err instanceof Error ? err.message : "Unknown error",
 			}
 		}

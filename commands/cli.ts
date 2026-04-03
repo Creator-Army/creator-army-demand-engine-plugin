@@ -114,10 +114,10 @@ export function registerCliSetup(api: OpenClawPluginApi): void {
 						console.log(`Response: ${text}`)
 						try {
 							const data = JSON.parse(text) as Record<string, unknown>
-							if (data.success) {
+							if (data.status === "ok") {
 								console.log("API is healthy and API key is valid.\n")
 							} else {
-								console.log(`API check failed: ${data.error ?? data.message ?? "Unknown error"}\n`)
+								console.log(`API check failed: ${data.error ?? data.message ?? data.status ?? "Unknown error"}\n`)
 							}
 						} catch {
 							console.log("")
