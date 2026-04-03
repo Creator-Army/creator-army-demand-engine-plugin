@@ -1,6 +1,6 @@
 {
 	"name": "@creatorarmy/openclaw-creatorarmy",
-	"version": "1.0.0",
+	"version": "1.0.1",
 	"type": "module",
 	"description": "OpenClaw plugin for Creator Army — tools and commands for managing short-form video ad and organic content creation workflows via the Creator Army API",
 	"license": "MIT",
