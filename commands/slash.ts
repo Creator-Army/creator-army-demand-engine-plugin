@@ -94,4 +94,23 @@ export function registerCommands(
 			}
 		},
 	})
+
+	api.registerCommand({
+		name: "health",
+		description: "Check Creator Army API health and verify API key",
+		acceptsArgs: false,
+		requireAuth: false,
+		handler: async () => {
+			try {
+				const result = await client.health()
+				if (result.success) {
+					return { text: "Creator Army API is healthy and API key is valid." }
+				}
+				return { text: `Creator Army API check failed: ${result.message}` }
+			} catch (err) {
+				log.error("/health failed", err)
+				return { text: "Failed to reach Creator Army API." }
+			}
+		},
+	})
 }

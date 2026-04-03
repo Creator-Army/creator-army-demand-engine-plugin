@@ -164,6 +164,19 @@ export function registerCli(
 						console.log(`- ${r.content}${score}`)
 					}
 				})
+
+			cmd
+				.command("health")
+				.description("Check Creator Army API health and verify API key")
+				.action(async () => {
+					console.log("\nChecking Creator Army API...")
+					const result = await client.health()
+					if (result.success) {
+						console.log("API is healthy and API key is valid.\n")
+					} else {
+						console.log(`API check failed: ${result.message}\n`)
+					}
+				})
 		},
 		{ commands: ["creator-army"] },
 	)

@@ -46,6 +46,21 @@ export class CreatorArmyClient {
 		return data
 	}
 
+	async health(): Promise<{ success: boolean; message?: string }> {
+		try {
+			const data = await this.request<{ success: boolean; message?: string }>(
+				"GET",
+				"/api/plugin/health",
+			)
+			return data
+		} catch (err) {
+			return {
+				success: false,
+				message: err instanceof Error ? err.message : "Unknown error",
+			}
+		}
+	}
+
 	async search(query: string, limit = 5): Promise<SearchResult[]> {
 		return this.request<SearchResult[]>("POST", "/v1/search", {
 			query,
