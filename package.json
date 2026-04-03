@@ -2,7 +2,7 @@
 	"name": "@creatorarmy/openclaw-creatorarmy",
 	"version": "1.0.0",
 	"type": "module",
-	"description": "OpenClaw Creator Army plugin",
+	"description": "OpenClaw plugin for Creator Army — tools and commands for managing short-form video ad and organic content creation workflows via the Creator Army API",
 	"license": "MIT",
 	"dependencies": {
 		"@sinclair/typebox": "0.34.47"
