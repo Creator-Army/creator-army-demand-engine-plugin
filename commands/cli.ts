@@ -111,6 +111,7 @@ export function registerCliSetup(api: OpenClawPluginApi): void {
 						})
 						const text = await response.text()
 						console.log(`Status: ${response.status}`)
+						console.log(`Response: ${text}`)
 						try {
 							const data = JSON.parse(text) as Record<string, unknown>
 							if (data.success) {
@@ -119,7 +120,7 @@ export function registerCliSetup(api: OpenClawPluginApi): void {
 								console.log(`API check failed: ${data.error ?? data.message ?? "Unknown error"}\n`)
 							}
 						} catch {
-							console.log(`Response: ${text}\n`)
+							console.log("")
 						}
 					} catch (err) {
 						const msg = err instanceof Error ? err.message : "Unknown error"
