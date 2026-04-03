@@ -14,7 +14,7 @@
 	},
 	"include": [
 		"*.ts",
-		"tools/*.ts",
+		"tools/**/*.ts",
 		"hooks/*.ts",
 		"commands/*.ts"
 	],

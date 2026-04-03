@@ -3,17 +3,18 @@ import { CreatorArmyClient } from "./client.ts"
 import { registerCli, registerCliSetup } from "./commands/cli.ts"
 import { registerCommands, registerStubCommands } from "./commands/slash.ts"
 import { parseConfig, creatorArmyConfigSchema } from "./config.ts"
-import { buildCaptureHandler } from "./hooks/capture.ts"
-import { buildRecallHandler } from "./hooks/recall.ts"
+import { buildSkillLoaderHandler } from "./hooks/skill-loader.ts"
 import { initLogger } from "./logger.ts"
-import { registerForgetTool } from "./tools/forget.ts"
-import { registerSearchTool } from "./tools/search.ts"
-import { registerStoreTool } from "./tools/store.ts"
+import { registerBriefTools } from "./tools/demand-engine/briefs.ts"
+import { registerContextTools } from "./tools/demand-engine/context.ts"
+import { registerExcavationTools } from "./tools/demand-engine/excavation.ts"
+import { registerReferenceTools } from "./tools/demand-engine/references.ts"
+import { registerScriptTools } from "./tools/demand-engine/scripts.ts"
 
 export default {
 	id: "openclaw-creator-army",
 	name: "Creator Army",
-	description: "OpenClaw Creator Army plugin",
+	description: "OpenClaw Creator Army plugin — demand engine for short-form video ads and organic content",
 	kind: "tool" as const,
 	configSchema: creatorArmyConfigSchema,
 
@@ -34,13 +35,17 @@ export default {
 
 		const client = new CreatorArmyClient(cfg.apiKey, cfg.baseUrl)
 
-		registerSearchTool(api, client, cfg)
-		registerStoreTool(api, client, cfg)
-		registerForgetTool(api, client, cfg)
+		// Load SKILL.md into agent context on every conversation start
+		api.on("before_agent_start", buildSkillLoaderHandler(client, cfg))
 
-		api.on("before_agent_start", buildRecallHandler(client, cfg))
-		api.on("agent_end", buildCaptureHandler(client, cfg))
+		// Demand Engine tools
+		registerReferenceTools(api, client, cfg)
+		registerContextTools(api, client, cfg)
+		registerExcavationTools(api, client, cfg)
+		registerBriefTools(api, client, cfg)
+		registerScriptTools(api, client, cfg)
 
+		// Slash commands & CLI
 		registerCommands(api, client, cfg)
 		registerCli(api, client, cfg)
 
