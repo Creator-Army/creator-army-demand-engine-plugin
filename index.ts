@@ -12,7 +12,7 @@ import { registerReferenceTools } from "./tools/demand-engine/references.ts"
 import { registerScriptTools } from "./tools/demand-engine/scripts.ts"
 
 export default {
-	id: "openclaw-creator-army",
+	id: "openclaw-creatorarmy",
 	name: "Creator Army",
 	description: "OpenClaw Creator Army plugin — demand engine for short-form video ads and organic content",
 	kind: "tool" as const,
@@ -50,7 +50,7 @@ export default {
 		registerCli(api, client, cfg)
 
 		api.registerService({
-			id: "openclaw-creator-army",
+			id: "openclaw-creatorarmy",
 			start: () => {
 				api.logger.info("creator-army: connected")
 			},

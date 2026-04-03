@@ -55,7 +55,7 @@ export function registerCliSetup(api: OpenClawPluginApi): void {
 					if (!plugins.entries) plugins.entries = {}
 					const entries = plugins.entries as Record<string, unknown>
 
-					entries["openclaw-creator-army"] = {
+					entries["openclaw-creatorarmy"] = {
 						enabled: true,
 						config: {
 							apiKey: apiKey.trim(),

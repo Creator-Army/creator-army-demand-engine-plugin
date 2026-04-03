@@ -1,5 +1,5 @@
 {
-	"name": "openclaw-creator-army",
+	"name": "@creatorarmy/openclaw-creatorarmy",
 	"version": "1.0.0",
 	"type": "module",
 	"description": "OpenClaw Creator Army plugin",
