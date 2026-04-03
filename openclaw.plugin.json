@@ -5,8 +5,14 @@
 		"apiKey": {
 			"label": "Creator Army API Key",
 			"sensitive": true,
-			"placeholder": "WAvsWw...",
+			"placeholder": "ca_...",
 			"help": "Your API key from Creator Army (or use ${CREATOR_ARMY_API_KEY})"
+		},
+		"baseUrl": {
+			"label": "API Base URL",
+			"placeholder": "https://api.creatorarmy.com",
+			"help": "Override the API base URL (or use ${CREATOR_ARMY_BASE_URL})",
+			"advanced": true
 		},
 		"debug": {
 			"label": "Debug Logging",
@@ -19,6 +25,7 @@
 		"additionalProperties": false,
 		"properties": {
 			"apiKey": { "type": "string" },
+			"baseUrl": { "type": "string" },
 			"debug": { "type": "boolean" }
 		},
 		"required": []

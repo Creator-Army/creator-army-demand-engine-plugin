@@ -32,7 +32,7 @@ export default {
 			return
 		}
 
-		const client = new CreatorArmyClient(cfg.apiKey)
+		const client = new CreatorArmyClient(cfg.apiKey, cfg.baseUrl)
 
 		registerSearchTool(api, client, cfg)
 		registerStoreTool(api, client, cfg)

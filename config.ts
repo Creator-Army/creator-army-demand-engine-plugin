@@ -1,9 +1,10 @@
 export type CreatorArmyConfig = {
 	apiKey: string | undefined
+	baseUrl: string
 	debug: boolean
 }
 
-const ALLOWED_KEYS = ["apiKey", "debug"]
+const ALLOWED_KEYS = ["apiKey", "baseUrl", "debug"]
 
 function assertAllowedKeys(
 	value: Record<string, unknown>,
@@ -46,8 +47,14 @@ export function parseConfig(raw: unknown): CreatorArmyConfig {
 		apiKey = undefined
 	}
 
+	const baseUrl =
+		typeof cfg.baseUrl === "string" && cfg.baseUrl.length > 0
+			? cfg.baseUrl.replace(/\/+$/, "")
+			: process.env.CREATOR_ARMY_BASE_URL ?? "https://b2a9-2403-580c-1dcc-0-181c-7d6e-4733-3836.ngrok-free.app"
+
 	return {
 		apiKey,
+		baseUrl,
 		debug: (cfg.debug as boolean) ?? false,
 	}
 }
@@ -58,6 +65,7 @@ export const creatorArmyConfigSchema = {
 		additionalProperties: false,
 		properties: {
 			apiKey: { type: "string" },
+			baseUrl: { type: "string" },
 			debug: { type: "boolean" },
 		},
 	},

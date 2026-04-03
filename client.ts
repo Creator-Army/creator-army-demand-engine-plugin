@@ -1,7 +1,5 @@
 import { log } from "./logger.ts"
 
-const BASE_URL = "https://api.creatorarmy.com"
-
 export type SearchResult = {
 	id: string
 	content: string
@@ -11,13 +9,15 @@ export type SearchResult = {
 
 export class CreatorArmyClient {
 	private apiKey: string
+	private baseUrl: string
 
-	constructor(apiKey: string) {
+	constructor(apiKey: string, baseUrl: string) {
 		if (!apiKey) {
 			throw new Error("Creator Army API key is required")
 		}
 		this.apiKey = apiKey
-		log.info("client initialized")
+		this.baseUrl = baseUrl
+		log.info(`client initialized (${baseUrl})`)
 	}
 
 	private async request<T>(
@@ -27,7 +27,7 @@ export class CreatorArmyClient {
 	): Promise<T> {
 		log.debugRequest(`${method} ${path}`, body ?? {})
 
-		const response = await fetch(`${BASE_URL}${path}`, {
+		const response = await fetch(`${this.baseUrl}${path}`, {
 			method,
 			headers: {
 				"Content-Type": "application/json",
