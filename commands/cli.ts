@@ -5,6 +5,7 @@ import * as readline from "node:readline"
 import type { OpenClawPluginApi } from "openclaw/plugin-sdk"
 import type { CreatorArmyClient } from "../client.ts"
 import type { CreatorArmyConfig } from "../config.ts"
+import { parseConfig } from "../config.ts"
 import { log } from "../logger.ts"
 
 export function registerCliSetup(api: OpenClawPluginApi): void {
@@ -123,61 +124,40 @@ export function registerCliSetup(api: OpenClawPluginApi): void {
 					)
 					console.log("")
 				})
+
+			cmd
+				.command("health")
+				.description("Check Creator Army API health and verify API key")
+				.action(async () => {
+					const cfg = parseConfig(api.pluginConfig)
+					if (!cfg.apiKey) {
+						console.log("\nNo API key configured. Run: openclaw creator-army setup\n")
+						return
+					}
+
+					console.log("\nChecking Creator Army API...")
+					try {
+						const response = await fetch(`${cfg.baseUrl}/api/plugin/health`, {
+							headers: { Authorization: `Bearer ${cfg.apiKey}` },
+						})
+						const data = (await response.json()) as Record<string, unknown>
+						if (response.ok && data.success) {
+							console.log("API is healthy and API key is valid.\n")
+						} else {
+							console.log(`API check failed: ${data.message ?? response.statusText}\n`)
+						}
+					} catch (err) {
+						const msg = err instanceof Error ? err.message : "Unknown error"
+						console.log(`API check failed: ${msg}\n`)
+					}
+				})
 		},
 		{ commands: ["creator-army"] },
 	)
 }
 
 export function registerCli(
-	api: OpenClawPluginApi,
-	client: CreatorArmyClient,
+	_api: OpenClawPluginApi,
+	_client: CreatorArmyClient,
 	_cfg: CreatorArmyConfig,
-): void {
-	api.registerCli(
-		// biome-ignore lint/suspicious/noExplicitAny: openclaw SDK does not ship types
-		({ program }: { program: any }) => {
-			const cmd = program.commands.find(
-				// biome-ignore lint/suspicious/noExplicitAny: openclaw SDK does not ship types
-				(c: any) => c.name() === "creator-army",
-			)
-			if (!cmd) return
-
-			cmd
-				.command("search")
-				.argument("<query>", "Search query")
-				.option("--limit <n>", "Max results", "5")
-				.action(async (query: string, opts: { limit: string }) => {
-					const limit = Number.parseInt(opts.limit, 10) || 5
-					log.debug(`cli search: query="${query}" limit=${limit}`)
-
-					const results = await client.search(query, limit)
-
-					if (results.length === 0) {
-						console.log("No memories found.")
-						return
-					}
-
-					for (const r of results) {
-						const score = r.similarity
-							? ` (${(r.similarity * 100).toFixed(0)}%)`
-							: ""
-						console.log(`- ${r.content}${score}`)
-					}
-				})
-
-			cmd
-				.command("health")
-				.description("Check Creator Army API health and verify API key")
-				.action(async () => {
-					console.log("\nChecking Creator Army API...")
-					const result = await client.health()
-					if (result.success) {
-						console.log("API is healthy and API key is valid.\n")
-					} else {
-						console.log(`API check failed: ${result.message}\n`)
-					}
-				})
-		},
-		{ commands: ["creator-army"] },
-	)
-}
+): void {}
