@@ -6,7 +6,6 @@ import type { OpenClawPluginApi } from "openclaw/plugin-sdk"
 import type { CreatorArmyClient } from "../client.ts"
 import type { CreatorArmyConfig } from "../config.ts"
 import { parseConfig } from "../config.ts"
-import { log } from "../logger.ts"
 
 export function registerCliSetup(api: OpenClawPluginApi): void {
 	api.registerCli(
@@ -78,50 +77,20 @@ export function registerCliSetup(api: OpenClawPluginApi): void {
 				.command("status")
 				.description("Check Creator Army configuration status")
 				.action(async () => {
-					const configPath = path.join(
-						os.homedir(),
-						".openclaw",
-						"openclaw.json",
-					)
-					const envKey = process.env.CREATOR_ARMY_API_KEY
+					const cfg = parseConfig(api.pluginConfig)
 
 					console.log("\nCreator Army Status\n")
 
-					let apiKeySource = ""
-					let apiKeyDisplay = ""
-
-					if (envKey) {
-						apiKeySource = "environment"
-						apiKeyDisplay = `${envKey.slice(0, 8)}...${envKey.slice(-4)}`
-					}
-
-					if (fs.existsSync(configPath)) {
-						try {
-							const config = JSON.parse(
-								fs.readFileSync(configPath, "utf-8"),
-							)
-							const entry =
-								config?.plugins?.entries?.["openclaw-creator-army"]
-							if (entry?.config?.apiKey && !envKey) {
-								const key = entry.config.apiKey as string
-								apiKeySource = "config"
-								apiKeyDisplay = `${key.slice(0, 8)}...${key.slice(-4)}`
-							}
-						} catch {
-							console.log("Could not read config file\n")
-							return
-						}
-					}
-
-					if (!apiKeyDisplay) {
+					if (!cfg.apiKey) {
 						console.log("No API key configured")
 						console.log("Run: openclaw creator-army setup\n")
 						return
 					}
 
-					console.log(
-						`API key: ${apiKeyDisplay} (from ${apiKeySource})`,
-					)
+					const display = `${cfg.apiKey.slice(0, 8)}...${cfg.apiKey.slice(-4)}`
+					console.log(`API key: ${display}`)
+					console.log(`Base URL: ${cfg.baseUrl}`)
+					console.log(`Debug: ${cfg.debug}`)
 					console.log("")
 				})
 
