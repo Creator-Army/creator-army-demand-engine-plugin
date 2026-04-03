@@ -104,20 +104,26 @@ export function registerCliSetup(api: OpenClawPluginApi): void {
 						return
 					}
 
-					console.log("\nChecking Creator Army API...")
+					console.log(`\nChecking ${cfg.baseUrl}/api/plugin/health ...`)
 					try {
 						const response = await fetch(`${cfg.baseUrl}/api/plugin/health`, {
 							headers: { Authorization: `Bearer ${cfg.apiKey}` },
 						})
-						const data = (await response.json()) as Record<string, unknown>
-						if (data.success) {
-							console.log("API is healthy and API key is valid.\n")
-						} else {
-							console.log(`API check failed: ${data.error ?? data.message ?? "Unknown error"}\n`)
+						const text = await response.text()
+						console.log(`Status: ${response.status}`)
+						try {
+							const data = JSON.parse(text) as Record<string, unknown>
+							if (data.success) {
+								console.log("API is healthy and API key is valid.\n")
+							} else {
+								console.log(`API check failed: ${data.error ?? data.message ?? "Unknown error"}\n`)
+							}
+						} catch {
+							console.log(`Response: ${text}\n`)
 						}
 					} catch (err) {
 						const msg = err instanceof Error ? err.message : "Unknown error"
-						console.log(`API check failed: ${msg}\n`)
+						console.log(`Connection failed: ${msg}\n`)
 					}
 				})
 		},
