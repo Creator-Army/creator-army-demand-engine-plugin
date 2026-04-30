@@ -1,10 +1,11 @@
 {
 	"name": "@creatorarmy/demand-engine-plugin",
-	"version": "1.0.0",
+	"version": "1.0.1",
 	"type": "module",
 	"description": "Creator Army demand engine plugin for Claude Code — short-form video ads and organic content.",
 	"license": "MIT",
 	"files": [
+		".claude-plugin",
 		"index.ts",
 		"openclaw.plugin.json",
 		"skills",
