@@ -1,0 +1,37 @@
+{
+	"name": "@creatorarmy/demand-engine-plugin",
+	"version": "1.0.0",
+	"type": "module",
+	"description": "Creator Army demand engine plugin for Claude Code — short-form video ads and organic content.",
+	"license": "MIT",
+	"files": [
+		"index.ts",
+		"openclaw.plugin.json",
+		"skills",
+		"types"
+	],
+	"scripts": {
+		"check-types": "tsc --noEmit"
+	},
+	"peerDependencies": {
+		"@anthropic-ai/claude-code": ">=1.0.0",
+		"openclaw": ">=2026.1.29"
+	},
+	"peerDependenciesMeta": {
+		"openclaw": {
+			"optional": true
+		},
+		"@anthropic-ai/claude-code": {
+			"optional": true
+		}
+	},
+	"openclaw": {
+		"extensions": [
+			"./index.ts"
+		]
+	},
+	"devDependencies": {
+		"@types/node": "^25.6.0",
+		"typescript": "^5.9.3"
+	}
+}

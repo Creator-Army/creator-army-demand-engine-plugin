@@ -1,0 +1,13 @@
+{
+  "name": "creator-army-demand-engine-plugin",
+  "owner": {
+    "name": "james-c-bc"
+  },
+  "plugins": [
+    {
+      "name": "creator-army-demand-engine",
+      "source": "./",
+      "description": "Creator Army demand creation system for short-form video ads and organic content. Built from Simon Beard's 15+ years scaling Culture Kings to a $600M exit and $100M+ in Meta ad spend."
+    }
+  ]
+}
