@@ -12,6 +12,11 @@ export default {
 	description:
 		"Creator Army demand creation skill — short-form video ads and organic content.",
 	kind: "tool" as const,
+	configSchema: {
+		type: "object",
+		properties: {},
+		additionalProperties: false,
+	} as const,
 
 	register(api: OpenClawPluginApi) {
 		const skill = readFileSync(SKILL_PATH, "utf-8")

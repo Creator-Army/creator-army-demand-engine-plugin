@@ -1,4 +1,9 @@
 {
 	"id": "openclaw-creatorarmy-demand-engine",
-	"kind": "tool"
+	"kind": "tool",
+	"configSchema": {
+		"type": "object",
+		"properties": {},
+		"additionalProperties": false
+	}
 }
