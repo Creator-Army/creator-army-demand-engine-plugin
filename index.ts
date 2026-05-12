@@ -4,7 +4,7 @@ import { fileURLToPath } from "node:url"
 import type { OpenClawPluginApi } from "openclaw/plugin-sdk"
 
 const here = dirname(fileURLToPath(import.meta.url))
-const SKILL_PATH = join(here, "skills", "creator-army-demand-engine", "SKILL.md")
+const SKILL_PATH = join(here, "..", "skills", "creator-army-demand-engine", "SKILL.md")
 
 export default {
 	id: "openclaw-creatorarmy-demand-engine",
